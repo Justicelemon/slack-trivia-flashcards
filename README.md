@@ -26,22 +26,48 @@ Slack Example: `/trivia random`
 Example Response: 
 
 ```json
-{"response_type":"in_channel","attachments":[{"fallback":"There's no name in the inscription on this much-visited tomb","fields":[{"title":"Category","value":"famous tombs","short":false},{"title":"Question","value":"There's no name in the inscription on this much-visited tomb","short":false},{"title":"Encoded Answer","value":"dGhlIFRvbWIgb2YgdGhlIFVua25vd24gU29sZGllcg==","short":false}]}]}
+{
+  "response_type": "in_channel",
+  "attachments": [
+    {
+      "fallback": "This U.S. general who loved horses \u0026 studied at a cavalry school helped protect the Lipizzaners in WWII",
+      "fields": [
+        {
+          "title": "Category",
+          "value": "by george, it's george",
+          "short": false
+        },
+        {
+          "title": "Question",
+          "value": "This U.S. general who loved horses \u0026 studied at a cavalry school helped protect the Lipizzaners in WWII",
+          "short": false
+        },
+        {
+          "title": "Encoded Answer",
+          "value": "R2VvcmdlIFBhdHRvbg==",
+          "short": false
+        }
+      ]
+    }
+  ]
+}
 ```
 
 ### Endpoint - Decode
 
 The decode endpoint is reachable at `/api/1/decode`. The command must be `/trivia` and the text should be one of the encoded answers that one of the calls to the trivia endpoint.
 
-Example: `http://localhost:8080/api/1/decode?command=/decode&text=dGhlIFRvbWIgb2YgdGhlIFVua25vd24gU29sZGllcg==`
+Example: `http://localhost:8080/api/1/decode?command=/decode&text=R2VvcmdlIFBhdHRvbg==`
 
 Slack Example: `/decode dGhlIFRvbWIgb2YgdGhlIFVua25vd24gU29sZGllcg==`
 
 Example Response:
 
 ```json
-{"response_type":"in_channel","text":"the Tomb of the Unknown Soldier"}
+{"response_type":"in_channel","text":"George Patton"}
 ```
+
+Because of the way HTTP urls are encoded, certain encoded answers might give `illegal base64 data at input byte 3` when accessed through a web browser directly. This issue hasn't shown up on Slack yet with the same encoded answers that caused those issues.
 
 Running Locally
 -----
